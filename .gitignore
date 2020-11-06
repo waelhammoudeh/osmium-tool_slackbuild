@@ -1,0 +1,3 @@
+# gitignore for osmium-tool SlackBuild repository
+# ignore sources-used directory
+sources-used/

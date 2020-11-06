@@ -1,0 +1,18 @@
+This is the README file for protozero slackware build script.
+
+Protozero is header only package. It is required for building osmium tool for
+open street maps. There is documentation in html files form for developers who
+want to use protozero in their code. By default documentation are NOT kept.
+
+DOC option is used to specify keeping the documentation in the package as:
+
+    DOC=yes ./protozero.SlackBuild
+
+then html files can be found in directory /usr/local/html/protozero
+    
+Package Requirements: 
+    Google protobuf was installed using sboinstall then select
+    [n] "no" for six.
+Note six for python is available at SlackBuild.org, feel free to install it
+first if you want!
+

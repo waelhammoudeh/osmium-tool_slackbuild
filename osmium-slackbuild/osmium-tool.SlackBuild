@@ -1,0 +1,77 @@
+#!/bin/bash
+
+#  Slackware package build script for osmium tool
+#  Any use of the provided files is at your own risk.
+#  
+#  Author: Wael Hammoudeh Email: w_hammoudeh@hotmail.com
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# 
+# 
+
+CWD=$(pwd)
+
+PKGNAM=osmium-tool
+VERSION=1.12.1
+BUILD=${BUILD:-2}
+TAG=${TAG:-_wh}
+TMP=${TMP:-/tmp}
+SRC=$TMP/$PKGNAM-$VERSION
+PKGDEST=$TMP/$PKGNAM
+MYPREFIX=/usr/local
+
+# Automatically determine the architecture we're building on:
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) export ARCH=i586 ;;
+    arm*) export ARCH=arm ;;
+    # Unless $ARCH is already set, use uname -m for all other archs:
+       *) export ARCH=$( uname -m ) ;;
+  esac
+fi
+
+rm -rf $SRC $PKGDEST
+cd $TMP
+tar xvzf $CWD/$PKGNAM-$VERSION.tar.gz
+
+cd $SRC
+
+chown -R root:root .
+chmod -R 755 .
+
+mkdir -p build $PKGDEST
+
+cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=$MYPREFIX \
+      -DCMAKE_BUILD_TYPE=Release \
+      ..
+
+make
+
+make DESTDIR=$PKGDEST install
+
+# TODO compress man pages.
+
+mkdir -p $PKGDEST/install
+cat $CWD/slack-desc > $PKGDEST/install/slack-desc
+
+# Save those package-making files .. may save your ass someday
+mkdir -p $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION
+cp $CWD/LICENSE $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+cp $CWD/$PKGNAM.SlackBuild $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+cp $CWD/README $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+cp $CWD/slack-desc $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+
+cd $PKGDEST
+/sbin/makepkg -l y -c n $TMP/$PKGNAM-$VERSION-$ARCH-$BUILD$TAG.tgz

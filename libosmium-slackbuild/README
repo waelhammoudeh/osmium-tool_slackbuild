@@ -1,0 +1,24 @@
+This is the README file libosmium slackware build script.
+
+LibOsmium is header only package. It is required for building osmium tool for
+open street maps. There is documentation in html files form for developers who
+want to use LibOsmium in their code. By default documentation are NOT built.
+
+DOC option is used to specify building the documentation in the package as:
+
+    DOC=yes ./libosmium.SlackBuild
+
+then html files can be found in directory /usr/local/html/libosmium
+    
+Package Requirements:
+ *) Included in slackware current: boost, ZLib, bz2lib, expat and cmake.
+ *) Installed from SlackBuild.org - really ponce fork for current, with
+    sboinstall used for most: 
+      - sparsehash -> ver. 2.0.3
+      - utfcpp -> ver. 2012.02.10
+      - proj -> ver 6.2.1
+      - pandoc -> Installed "Dugan package from LQ Forum"
+      - cppcheck -> ver. 1.76
+      - geos -> ver. 3.8.0
+      - gdal -> ver. 3.0.4 built with script from SlackBuild.org.
+      - RapidJSON -> ver. 1.1.0
