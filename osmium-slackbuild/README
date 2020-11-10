@@ -13,8 +13,8 @@ Required Packages:
     - expat
   
 2) Found on SlackBuild.org server: 
-   Note I installed most with sboinstall <PKG-NAME>, the version number is the
-   version I installed. I did my installation IN THIS ORDER.
+   Note I installed most with sbotools / sboinstall <PKG-NAME>, the version
+   number is the version I installed. I did my installation IN THIS ORDER.
     2.1 - RapidJSON --> version 1.1.0
     2.2 - utfcpp --> version 2012.02.10
     2.3 - Sparsehash --> version 2.0.3
