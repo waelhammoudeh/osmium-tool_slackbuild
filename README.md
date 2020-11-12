@@ -1,7 +1,7 @@
 # osm_osmium-tool_slackbuild
 README_REPO
 
-This is my git repository for OpenStreenMaps osmium-tool slackware building
+This is my git repository for OpenStreetMaps osmium-tool slackware building
 scripts. It includes the following three (3) directories:
 
 1) protozero-slackbuild
