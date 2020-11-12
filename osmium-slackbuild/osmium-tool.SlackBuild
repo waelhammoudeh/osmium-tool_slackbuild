@@ -23,7 +23,7 @@ CWD=$(pwd)
 
 PKGNAM=osmium-tool
 VERSION=1.12.1
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_wh}
 TMP=${TMP:-/tmp}
 SRC=$TMP/$PKGNAM-$VERSION
@@ -47,7 +47,11 @@ tar xvzf $CWD/$PKGNAM-$VERSION.tar.gz
 cd $SRC
 
 chown -R root:root .
-chmod -R 755 .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 mkdir -p build $PKGDEST
 
@@ -61,7 +65,21 @@ make
 
 make DESTDIR=$PKGDEST install
 
-# TODO compress man pages.
+# man pages are installed under $MYPREFIX/share/man by make install, move them
+# I like manual pages installed in /usr/local/man
+mkdir -p $PKGDEST/$MYPREFIX/man
+
+cp -r $PKGDEST/$MYPREFIX/share/man/* $PKGDEST/$MYPREFIX/man/
+
+rm -rf $PKGDEST/$MYPREFIX/share
+
+# Compress man pages if they exist
+if [ -d $PKGDEST/$MYPREFIX/man ]; then
+  ( cd $PKGDEST/$MYPREFIX/man
+  find . -type f -exec gzip -9 {} \;
+  for i in $(find . -type l) ; do ln -s $(readlink $i).gz $i.gz ; rm $i ; done
+  ) 
+fi
 
 mkdir -p $PKGDEST/install
 cat $CWD/slack-desc > $PKGDEST/install/slack-desc
