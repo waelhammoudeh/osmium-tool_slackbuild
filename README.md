@@ -1,8 +1,11 @@
 # osm_osmium-tool_slackbuild
 README_REPO
 
-This is my git repository for OpenStreetMaps osmium-tool slackware building
-scripts. It includes the following three (3) directories:
+Osmium is a multipurpose command line tool for working with OpenStreetMap
+data based on the Osmium library.
+
+This repository has Slackware build scripts for the osmium tool.
+ It includes the following three (3) directories:
 
 1) protozero-slackbuild
 2) libosmium-slackbuild
