@@ -24,7 +24,7 @@ CWD=$(pwd)
 
 PKGNAM=protozero
 VERSION=1.7.0
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_wh}
 TMP=${TMP:-/tmp}
 SRC=$TMP/$PKGNAM-$VERSION
@@ -51,6 +51,11 @@ tar xvzf $CWD/$PKGNAM-$VERSION.tar.gz
 cd $SRC
 
 chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 mkdir -p build $PKGDEST
 
@@ -62,16 +67,17 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
 # update old configuration in Doxyfile.in
 doxygen -u ../doc/Doxyfile.in
 
-# correct HAVE_DOT setting in Doxyfile! Replace YES with NO
-sed -E "s|^HAVE_DOT(\s)*=(\s)*YES|HAVE_DOT = NO|" -i ../doc/Doxyfile.in
+# correct HAVE_DOT setting in Doxyfile! Replace YES with NO -- removed line June 11/2021 W.H
+# sed -E "s|^HAVE_DOT(\s)*=(\s)*YES|HAVE_DOT = NO|" -i ../doc/Doxyfile.in
 
-make
+make -j$(expr $(nproc) + 1)
 
 make DESTDIR=$PKGDEST install
 
 # copy FindProtozero.cmake file to /usr/local/share/cmake directory
 mkdir -p $PKGDEST/$MYPREFIX/share/cmake
 cp ../cmake/FindProtozero.cmake $PKGDEST/$MYPREFIX/share/cmake/
+
 
 # keep html documentations if user wants them
 if [ $DOC = "yes" ]; then
@@ -91,6 +97,7 @@ cp $CWD/LICENSE $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/$PKGNAM.SlackBuild $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/README $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/slack-desc $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+cp $CWD/protozero.info $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 
 cd $PKGDEST
 /sbin/makepkg -l y -c n $TMP/$PKGNAM-$VERSION-$ARCH-$BUILD$TAG.tgz

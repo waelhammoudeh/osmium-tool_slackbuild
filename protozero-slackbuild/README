@@ -11,8 +11,4 @@ DOC option is used to specify keeping the documentation in the package as:
 then html files can be found in directory /usr/local/html/protozero
     
 Package Requirements: 
-    Google protobuf was installed using sbotools / sboinstall then select
-    [n] "no" for six.
-Note six for python is available at SlackBuild.org, feel free to install it
-first if you want!
-
+    Google protobuf is used in some tests but not used by the library.
