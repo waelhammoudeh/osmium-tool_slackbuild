@@ -23,7 +23,7 @@
 CWD=$(pwd)
 
 PKGNAM=libosmium
-VERSION=2.15.6
+VERSION=2.17.0
 BUILD=${BUILD:-3}
 TAG=${TAG:-_wh}
 TMP=${TMP:-/tmp}
@@ -51,6 +51,11 @@ tar xvzf $CWD/$PKGNAM-$VERSION.tar.gz
 cd $SRC
 
 chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 mkdir -p build $PKGDEST
 
@@ -61,7 +66,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 
-make
+make -j$(expr $(nproc) + 1)
 
 make DESTDIR=$PKGDEST install
 
@@ -72,7 +77,7 @@ if [ $DOC = "yes" ]; then
   doxygen -u ../doc/Doxyfile.in
 
   # correct HAVE_DOT setting in Doxyfile! Replace YES with NO
-  sed -E "s|^HAVE_DOT(\s)*=(\s)*YES|HAVE_DOT = NO|" -i ../doc/Doxyfile.in
+  # sed -E "s|^HAVE_DOT(\s)*=(\s)*YES|HAVE_DOT = NO|" -i ../doc/Doxyfile.in -- commented out 6/11/2021 WH
   
   echo "Building documentation ..."
   
@@ -97,6 +102,7 @@ cp $CWD/LICENSE $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/libosmium.SlackBuild $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/README $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/slack-desc $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+cp $CWD/libosmium.info $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 
 cd $PKGDEST
 /sbin/makepkg -l y -c n $TMP/$PKGNAM-$VERSION-$ARCH-$BUILD$TAG.tgz
