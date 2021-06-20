@@ -22,7 +22,7 @@
 CWD=$(pwd)
 
 PKGNAM=osmium-tool
-VERSION=1.12.1
+VERSION=1.13.1
 BUILD=${BUILD:-3}
 TAG=${TAG:-_wh}
 TMP=${TMP:-/tmp}
@@ -61,7 +61,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$MYPREFIX \
       -DCMAKE_BUILD_TYPE=Release \
       ..
 
-make
+make -j$(expr $(nproc) + 1)
 
 make DESTDIR=$PKGDEST install
 
@@ -90,6 +90,7 @@ cp $CWD/LICENSE $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/$PKGNAM.SlackBuild $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/README $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 cp $CWD/slack-desc $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+cp $CWD/osmium.info $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
 
 cd $PKGDEST
 /sbin/makepkg -l y -c n $TMP/$PKGNAM-$VERSION-$ARCH-$BUILD$TAG.tgz

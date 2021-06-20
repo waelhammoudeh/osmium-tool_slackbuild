@@ -5,50 +5,24 @@ This is the README file for osmium-tool slackware build script.
 Osmium is a command line tool for working with OpenStreetMap data files.
 
 Required Packages:
-1) Provided by slackware64 current (mine was last updated Nov.2nd/2020):
-    - boost
-    - bz2lib
-    - zLib
-    - cmake
-    - expat
-  
-2) Found on SlackBuild.org server: 
-   Note I installed most with sbotools / sboinstall <PKG-NAME>, the version
-   number is the version I installed. I did my installation IN THIS ORDER.
-    2.1 - RapidJSON --> version 1.1.0
-    2.2 - utfcpp --> version 2012.02.10
-    2.3 - Sparsehash --> version 2.0.3
-    2.4 - proj --> version 6.2.1
-    2.5 - cppcheck --> version 1.76
-    2.6 - geos --> version 3.8.0 - required for gdal.
-    2.7 - gdal --> version 3.0.4 :: I downloaded SlackBuild from SlackBuild.org
-                   and source then manually built and installed.
-                   
-3) Provided by yours truly as SlackBuild scripts: found with this package.
-    3.1 - protozero --> version 1.7.0
-    3.2 - Libosmium --> version 2.15.6
+    protozero version 1.6.3 or later
+    Libosmium version 2.16.0 or later
     
-4) Pandoc package is optional and will build man pages if detected by cmake.
-   You can find osmium manual at: (https://osmcode.org/osmium-tool/manual.html).
-   You can (should) download the manual if you do not install pandoc. 
-   I used an old script I found on www.linuxquestions.org slackware
-   forum written by "LQ Guru dugan"; see the thread at:
-     "https://www.linuxquestions.org/questions/slackware-14/
-      installing-pandoc-on-current-x86_64-the-easy-way-4175620166/"
-   (above url is one line broken into 2; combine into ONE line please)
-   and the source mentioned in the thread is: "https://pandoc.org/installing.html"
-   The file I downloaded was: "pandoc-2.11-linux-amd64.tar.gz" 
-   So change the version number and fix file name to match whatever file you 
-   download and then install the package.
-   
-Summary:
-  Assuming you are on current (like me); install the packages in the listed order
-in step 2 above, then build and install the two packages in step 3. Now you are
-ready to build and install the osmium-tool package.
+Optional Pandoc package to build man pages if detected by cmake.
 
-What is next:
-  Build, install and configure OpenStreepMap Overpass server on local machine.
-  
+You can find osmium manual at: (https://osmcode.org/osmium-tool/manual.html).
+You can (should) download the manual if you do not install pandoc.
+
+Pandoc I used an old script I found on www.linuxquestions.org slackware
+forum written by "LQ Guru dugan"; see the thread at:
+  "https://www.linuxquestions.org/questions/slackware-14/
+   installing-pandoc-on-current-x86_64-the-easy-way-4175620166/"
+(above url is one line broken into 2; combine into ONE line please)
+and the source mentioned in the thread is: "https://pandoc.org/installing.html"
+The file I downloaded was: "pandoc-2.11-linux-amd64.tar.gz"
+So change the version number and fix file name to match whatever file you
+download and then install the package.
+
 Enjoy :)
 Wael Hammoudeh
 
