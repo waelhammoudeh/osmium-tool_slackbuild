@@ -8,12 +8,12 @@
         |-----handy-ruler------------------------------------------------------|
 osmium-tool:
 osmium-tool: A multipurpose command line tool for working with OpenStreetMap
-osmium-tool: data based on the Osmium library.
+osmium-tool: data files based on the Osmium library.
 osmium-tool:
 osmium-tool: Official web site: https://osmcode.org/osmium-tool/
 osmium-tool:
-osmium-tool: Source:
-osmium-tool: https://github.com/osmcode/osmium-tool/archive/refs/tags/v1.13.1.tar.gz
+osmium-tool:
+osmium-tool:
 osmium-tool:
 osmium-tool:
 osmium-tool:

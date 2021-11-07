@@ -24,8 +24,16 @@ The file I downloaded was: "pandoc-2.11-linux-amd64.tar.gz"
 So change the version number and fix file name to match whatever file you
 download and then install the package.
 
+If you used my prevoius script; then please remove protozero and libosmium
+packages before building the new osmium-tool package.
+
+A littile bash script is provided to download all three required files, please
+use the script for the download since it renames files to the expected names
+by the SlackBuild script! And I hope it makes your life easier.
+
 Enjoy :)
 Wael Hammoudeh
+November 6th, 2021
 
    
    

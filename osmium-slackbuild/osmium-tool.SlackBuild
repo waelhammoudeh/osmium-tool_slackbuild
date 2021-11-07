@@ -16,19 +16,21 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# 
-# 
 
 CWD=$(pwd)
 
 PKGNAM=osmium-tool
-VERSION=1.13.1
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_wh}
 TMP=${TMP:-/tmp}
-SRC=$TMP/$PKGNAM-$VERSION
-PKGDEST=$TMP/$PKGNAM
+BUILDROOT=$TMP/build-$PKGNAM
+PKGDEST=$TMP/pkg-$PKGNAM
 MYPREFIX=/usr/local
+
+LIBOSM_VER=2.17.1
+PROTO_VER=1.7.0
+OSMIUM_VER=1.13.2
+SRC=$BUILDROOT/$PKGNAM-$OSMIUM_VER
 
 # Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
@@ -40,9 +42,15 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-rm -rf $SRC $PKGDEST
-cd $TMP
-tar xvzf $CWD/$PKGNAM-$VERSION.tar.gz
+
+rm -rf $BUILDROOT $PKGDEST
+
+mkdir -p $TMP $BUILDROOT $PKGDEST
+
+cd $BUILDROOT
+tar xvzf $CWD/$PKGNAM-$OSMIUM_VER.tar.gz
+tar xvzf $CWD/libosmium-$LIBOSM_VER.tar.gz
+tar xvzf $CWD/protozero-$PROTO_VER.tar.gz
 
 cd $SRC
 
@@ -53,13 +61,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p build $PKGDEST
+mkdir -p build
 
 cd build
 
 cmake -DCMAKE_INSTALL_PREFIX=$MYPREFIX \
-      -DCMAKE_BUILD_TYPE=Release \
-      ..
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOSMIUM_INCLUDE_DIR=$BUILDROOT/libosmium-$LIBOSM_VER/include \
+            -DPROTOZERO_INCLUDE_DIR=$BUILDROOT/protozero-$PROTO_VER/include \
+            ..
 
 make -j$(expr $(nproc) + 1)
 
@@ -69,7 +79,10 @@ make DESTDIR=$PKGDEST install
 # I like manual pages installed in /usr/local/man
 mkdir -p $PKGDEST/$MYPREFIX/man
 
-cp -r $PKGDEST/$MYPREFIX/share/man/* $PKGDEST/$MYPREFIX/man/
+# manual pages are built if we have pandoc installed ...
+if [ -x /usr/bin/pandoc ]; then
+    cp -r $PKGDEST/$MYPREFIX/share/man/* $PKGDEST/$MYPREFIX/man/
+fi
 
 rm -rf $PKGDEST/$MYPREFIX/share
 
@@ -85,12 +98,13 @@ mkdir -p $PKGDEST/install
 cat $CWD/slack-desc > $PKGDEST/install/slack-desc
 
 # Save those package-making files .. may save your ass someday
-mkdir -p $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION
-cp $CWD/LICENSE $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
-cp $CWD/$PKGNAM.SlackBuild $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
-cp $CWD/README $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
-cp $CWD/slack-desc $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
-cp $CWD/osmium.info $PKGDEST/$MYPREFIX/doc/$PKGNAM-$VERSION/
+mkdir -p $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER
+cp $CWD/LICENSE $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER/
+cp $CWD/$PKGNAM.SlackBuild $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER/
+cp $CWD/README $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER/
+cp $CWD/slack-desc $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER/
+cp $CWD/osmium.info $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER/
+cp $CWD/download-sources.sh $PKGDEST/$MYPREFIX/doc/$PKGNAM-$OSMIUM_VER/
 
 cd $PKGDEST
-/sbin/makepkg -l y -c n $TMP/$PKGNAM-$VERSION-$ARCH-$BUILD$TAG.tgz
+/sbin/makepkg -l y -c n $TMP/$PKGNAM-$OSMIUM_VER-$ARCH-$BUILD$TAG.tgz

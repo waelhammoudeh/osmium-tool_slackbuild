@@ -2,18 +2,14 @@
 README_REPO
 
 Osmium is a multipurpose command line tool for working with OpenStreetMap
-data based on the Osmium library.
+data files based on the Osmium library.
 
-This repository has Slackware build scripts for the osmium tool.
- It includes the following three (3) directories:
+This repository has Slackware build script for the osmium tool. There is only
+one SlackBuild script here now - I had three!
 
-1) protozero-slackbuild
-2) libosmium-slackbuild
-3) osmium-slackbuild
-
-There is also a fourth directory named "sources-used". 
-Note that I can not re / distribute sources. This directory is ignored by git.
-
-See the README file in each directory please.
+If you are upgrading from my earlier version, please remove protozero and
+libosmium packages before building this new osmium-tool version. Also please
+use the provided "download-sources.sh" script to get all needed three files.
 
 Wael Hammoudeh
+11/6/2021
