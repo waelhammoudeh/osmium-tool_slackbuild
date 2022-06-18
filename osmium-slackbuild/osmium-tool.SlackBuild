@@ -27,9 +27,9 @@ BUILDROOT=$TMP/build-$PKGNAM
 PKGDEST=$TMP/pkg-$PKGNAM
 MYPREFIX=/usr/local
 
-LIBOSM_VER=2.17.1
-PROTO_VER=1.7.0
-OSMIUM_VER=1.13.2
+LIBOSM_VER=2.18.0
+PROTO_VER=1.7.1
+OSMIUM_VER=1.14.0
 SRC=$BUILDROOT/$PKGNAM-$OSMIUM_VER
 
 # Automatically determine the architecture we're building on:

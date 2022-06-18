@@ -4,9 +4,7 @@ This is the README file for osmium-tool slackware build script.
 
 Osmium is a command line tool for working with OpenStreetMap data files.
 
-Required Packages:
-   *) protozero version 1.6.3 or later
-   *) Libosmium version 2.16.0 or later
+Files and scripts are update to build osmium vesion 1.14.0 on June 18/2022
     
 Optional package:
   *) Pandoc package to build man pages if detected by cmake.
@@ -24,18 +22,13 @@ The file I downloaded was: "pandoc-2.11-linux-amd64.tar.gz"
 So change the version number and fix file name to match whatever file you
 download and then install the package.
 
-If you used my prevoius script; then please remove protozero and libosmium
+If you used my previous script; then please remove protozero and libosmium
 packages before building the new osmium-tool package.
 
-A littile bash script is provided to download all three required files, please
+A little bash script is provided to download all three required files, please
 use the script for the download since it renames files to the expected names
 by the SlackBuild script! And I hope it makes your life easier.
 
 Enjoy :)
 Wael Hammoudeh
-November 6th, 2021
-
-   
-   
-  
-
+June 18/2022
