@@ -4,7 +4,7 @@ This is the README file for osmium-tool slackware build script.
 
 Osmium is a command line tool for working with OpenStreetMap data files.
 
-Files and scripts are update to build osmium vesion 1.15.0 on August 10/2023
+Files and scripts are updated to build osmium vesion 1.15.0 on August 10/2023
     
 Optional package:
   *) Pandoc package to build man pages if detected by cmake.
