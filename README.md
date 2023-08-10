@@ -1,7 +1,7 @@
 # osm_osmium-tool_slackbuild
 README_REPO
 
-Files and scripts are updated to build osmium version 1.14.0 on June 18/2022
+Files and scripts are updated to build osmium version 1.15.0 on August 10/2023
 
 Osmium is a multipurpose command line tool for working with OpenStreetMap
 data files based on the Osmium library.
@@ -12,4 +12,4 @@ Please use the provided "download-sources.sh" script to get all required source
 files; the script downloads AND renames sources as expected by the build script.
 
 Wael Hammoudeh
-06/18/2022
+August 10/2023

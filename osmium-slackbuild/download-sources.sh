@@ -3,8 +3,8 @@
 # script to download 3 sources files required for osmium-tool
 # Please use this script ... it renames downloaded files to expected names!
 
-OSMIUM_VER=1.14.0
-LIBOSM_VER=2.18.0
+OSMIUM_VER=1.15.0
+LIBOSM_VER=2.19.0
 PROTO_VER=1.7.1
 ODDV=v
 
