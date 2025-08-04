@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #  Slackware package build script for osmium tool
 #  Any use of the provided files is at your own risk.
@@ -17,6 +17,8 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+set -e
+
 CWD=$(pwd)
 
 PKGNAM=osmium-tool
@@ -27,9 +29,10 @@ BUILDROOT=$TMP/build-$PKGNAM
 PKGDEST=$TMP/pkg-$PKGNAM
 MYPREFIX=/usr/local
 
-LIBOSM_VER=2.19.0
-PROTO_VER=1.7.1
-OSMIUM_VER=1.15.0
+LIBOSM_VER=2.22.0
+PROTO_VER=1.8.1
+OSMIUM_VER=1.18.0
+
 SRC=$BUILDROOT/$PKGNAM-$OSMIUM_VER
 
 # Automatically determine the architecture we're building on:
@@ -41,7 +44,6 @@ if [ -z "$ARCH" ]; then
        *) export ARCH=$( uname -m ) ;;
   esac
 fi
-
 
 rm -rf $BUILDROOT $PKGDEST
 
@@ -72,6 +74,9 @@ cmake -DCMAKE_INSTALL_PREFIX=$MYPREFIX \
             ..
 
 make -j$(expr $(nproc) + 1)
+
+# man pages are built if pandoc is found in the system - get pandoc package by Dugan from:
+# https://www.linuxquestions.org/questions/slackware-14/installing-pandoc-on-current-x86_64-the-easy-way-4175620166/
 
 make DESTDIR=$PKGDEST install
 

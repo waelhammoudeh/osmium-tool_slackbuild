@@ -1,11 +1,18 @@
 #!/bin/bash
 
-# script to download 3 sources files required for osmium-tool
-# Please use this script ... it renames downloaded files to expected names!
+# Upstream source name does NOT include PACKAGE-NAME
+# I rename sources as follows:
+#   "v1.18.0.tar.gz" --> "osmium-tool-1.18.0.tar.gz"
+#   "v2.22.0.tar.gz" --> "libosmium-2.22.0.tar.gz"
+#   "v1.8.1.tar.gz" --> "protozero-1.8.1.tar.gz"
+#
+# Script to download 3 source files required for osmium-tool
+# Please use this script ... it renames downloaded files to expected
+# names by my build script!
 
-OSMIUM_VER=1.15.0
-LIBOSM_VER=2.19.0
-PROTO_VER=1.7.1
+OSMIUM_VER=1.18.0
+LIBOSM_VER=2.22.0
+PROTO_VER=1.8.1
 ODDV=v
 
 if [  ! -f libosmium-$LIBOSM_VER.tar.gz ]; then
